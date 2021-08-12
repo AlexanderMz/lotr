@@ -37,6 +37,8 @@
   </a-layout>
 </template>
 <script>
+// import { onMounted } from 'vue';
+// import { useStore } from 'vuex';
 import Characters from './Characters.vue'
 import Quotes from './Quotes.vue'
 
@@ -46,6 +48,10 @@ export default {
     Quotes
   },
   setup() {
+    // const store = useStore();
+    // onMounted(()=> {
+    //   store.dispatch('getCharacters')
+    // })
     
   },
 }

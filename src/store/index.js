@@ -1,5 +1,9 @@
+// import Vue from 'vue'
 import { createStore } from 'vuex'
 import apiClient from '../lib/apiClient'
+
+
+// Vue.config.devtools = true
 
 export default createStore({
   state: {
@@ -25,5 +29,8 @@ export default createStore({
     
   },
   modules: {
-  }
+  },
+  getters: {
+    characters: (state) => state.characters,
+  },
 })

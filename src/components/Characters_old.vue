@@ -1,15 +1,19 @@
 <template>
-  <a-table :columns="columns" :data-source="characters" />
-  <!-- <a-table
-      :dataSource="characters"
+  <!-- <a-table :columns="columns" :data-source="characters"  @change="onChange" /> -->
+  <a-table
       :columns="columns"
+      :rowKey="record => record.login.uuid"
+      :dataSource="characters"
       :pagination="{ pageSize: 30 }"
       :loading="loading"
+      @change="onChange"
     >
-    </a-table> -->
+    </a-table>
+    <h4>{{ characters }}</h4>
 </template>
 <script>
-import apiClient from '../lib/apiClient'
+import { computed } from 'vue';
+import {  useStore } from 'vuex';
 const columns = [
   {
     title: 'Name',
@@ -95,42 +99,58 @@ const columns = [
     dataIndex: 'wikiurl',
   },
 ];
-export default{
-  data() {
+
+const dataOld = [
+  {
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park',
+  },
+  {
+    key: '2',
+    name: 'Jim Green',
+    age: 42,
+    address: 'London No. 1 Lake Park',
+  },
+  {
+    key: '3',
+    name: 'Joe Black',
+    age: 32,
+    address: 'Sidney No. 1 Lake Park',
+  },
+  {
+    key: '4',
+    name: 'Jim Red',
+    age: 32,
+    address: 'London No. 2 Lake Park',
+  },
+];
+
+function onChange(pagination, filters, sorter) {
+  console.log('params', pagination, filters, sorter);
+}
+
+export default {
+  setup() {
+    const store = useStore();
+    // onMounted(()=> {
+    //   store.dispatch('getCharacters')
+    // })
+
+    // const characters = computed(() => store.getters['characters'])
+    const characters = computed(() => store.state.characters)
+    console.log('characters', characters)
+    
+    
     return {
-      characters: [],
-      columns
-    }
-  },
-  created() {
-    this.getCharacters();
-  },
-  updated() {
+      dataOld,
+      characters,
+      columns,
+    };
   },
   methods: {
-    async getCharacters() {
-      try {
-        const characters = await apiClient({
-          url: '/character'
-        })
-        console.log('characters', characters);
-        this.characters.push(characters)
-      //   await characters.forEach(character => {
-      //   console.log(character);
-      //   let item = {}
-      //   item.id = character.id;
-      //   item.name = character.name;
-      //   item.race = character.race;
-      //   item.gender = character.gender;
-      //   item.hair = character.hair;
-      //   item.height = character.height;
-      //   item.house = character.house;
-      //   this.entradas.push(item)
-      // })
-      } catch (err) {
-        throw new Error(err)
-      }
-    }
+    onChange,
   },
 };
 </script>
