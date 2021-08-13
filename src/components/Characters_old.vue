@@ -139,10 +139,10 @@ export default {
     })
 
     // const characters = computed(() => store.getters['characters'])
-    const computedCharacters = computed(() => store.state.characters)
-    const characters = computedCharacters.value.map(character => {
-      console.log('character de computed', character);
-    })
+    const characters = computed(() => store.state.characters)
+    // const characters = computedCharacters.value.map(character => {
+    //   console.log('character de computed', character);
+    // })
     console.log('characters', characters)
     
     return {
