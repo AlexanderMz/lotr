@@ -14,12 +14,12 @@ const request = axios.create({
 })
 
 
-export default async function client(opts) {
+export default async function client (opts) {
   try {
     debug('start', opts)
     const res = await request(opts)
     debug('success', res.data.docs)
-    console.log('res', res.data.docs)
+    //console.log('res', res.data.docs)
     return res.data.docs
   } catch (err) {
     debug('error', err.response ? err.response.data : err.message)

@@ -23,11 +23,11 @@
       <div :style="{ background: '#fff', padding: '24px', minHeight: '380px', marginTop: '64px' }">
         <h3>Characters</h3>
         <div :style="{marginTop: '16px'}">
-        <Characters />
+          <Characters />
         </div>
         <h3>Quotes</h3>
         <div :style="{marginTop: '16px'}">
-        <Quotes />
+          <Quotes />
         </div>
       </div>
     </a-layout-content>
@@ -47,12 +47,12 @@ export default {
     Characters,
     Quotes
   },
-  setup() {
+  setup () {
     // const store = useStore();
     // onMounted(()=> {
     //   store.dispatch('getCharacters')
     // })
-    
+
   },
 }
 </script>

@@ -10,12 +10,12 @@ export default createStore({
     characters: []
   },
   mutations: {
-    setCharacters(state, payload) {
+    setCharacters (state, payload) {
       state.characters = payload
     },
   },
   actions: {
-    async getCharacters({commit}) {
+    async getCharacters ({ commit }) {
       try {
         const data = await apiClient({
           url: '/character'
@@ -25,8 +25,8 @@ export default createStore({
         console.log('error', err)
       }
     }
-    
-    
+
+
   },
   modules: {
   },
