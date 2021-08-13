@@ -12,8 +12,9 @@
     <h4 v-if="characters">{{ characters }}</h4>
 </template>
 <script>
-import { computed, onMounted } from 'vue';
-import {  useStore } from 'vuex';
+// import { computed, onMounted } from 'vue';
+// import {  useStore } from 'vuex';
+import { useGetCharacters } from '../mixins/useGetCharacters';
 const columns = [
   {
     title: 'Name',
@@ -133,23 +134,22 @@ function onChange(pagination, filters, sorter) {
 
 export default {
   setup() {
-    const store = useStore();
-    onMounted(()=> {
-      store.dispatch('getCharacters')
-    })
+    // const store = useStore();
+    // onMounted(()=> {
+    //   store.dispatch('getCharacters')
+    // })
 
-    // const characters = computed(() => store.getters['characters'])
-    const computedCharacters = computed(() => store.state.characters)
-    const characters = computedCharacters.value.map(character => {
-      console.log('character de computed', character);
-    })
-    console.log('characters', characters)
+    // // const characters = computed(() => store.getters['characters'])
+    // const characters = computed(() => store.state.characters)
+    // console.log('characters', characters)
     
-    return {
-      dataOld,
-      characters,
-      columns,
-    };
+    // return {
+    //   dataOld,
+    //   characters,
+    //   columns,
+    // };
+    const { count, characters, loading } = useGetCharacters();
+    return { count, characters, loading, columns, dataOld };
   },
   methods: {
     onChange,

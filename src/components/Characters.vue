@@ -1,15 +1,21 @@
 <template>
-  <a-table :columns="columns" :data-source="characters" />
-  <!-- <a-table
+  <!-- <a-table :columns="columns" :data-source="characters" /> -->
+  <a-table
       :dataSource="characters"
       :columns="columns"
-      :pagination="{ pageSize: 30 }"
+      :pagination="{ pageSize: 10 }"
       :loading="loading"
+      @change="onChange"
     >
-    </a-table> -->
+    </a-table>
 </template>
 <script>
 import apiClient from '../lib/apiClient'
+
+function onChange(pagination, filters, sorter) {
+  console.log('params', pagination, filters, sorter);
+}
+
 const columns = [
   {
     title: 'Name',
@@ -69,6 +75,7 @@ const columns = [
         value: 'female',
       },
     ],
+    // filters: this.getRace(),
     filterMultiple: true,
     onFilter: (value, record) => record.address.indexOf(value) === 0,
     sorter: (a, b) => a.address.length - b.address.length,
@@ -95,10 +102,12 @@ const columns = [
     dataIndex: 'wikiurl',
   },
 ];
+
 export default{
   data() {
     return {
       characters: [],
+      races: [],
       columns
     }
   },
@@ -106,27 +115,34 @@ export default{
     this.getCharacters();
   },
   updated() {
+    // this.getRace()
   },
   methods: {
+    onChange,
+    getRace () {
+      console.log('races', this.characters.race)
+      this.characters.map(character => {
+        let races = {}
+        races.race = character.race
+        this.races.push(races)
+      })
+    },
     async getCharacters() {
       try {
         const characters = await apiClient({
           url: '/character'
         })
-        console.log('characters', characters);
-        this.characters.push(characters)
-      //   await characters.forEach(character => {
-      //   console.log(character);
-      //   let item = {}
-      //   item.id = character.id;
-      //   item.name = character.name;
-      //   item.race = character.race;
-      //   item.gender = character.gender;
-      //   item.hair = character.hair;
-      //   item.height = character.height;
-      //   item.house = character.house;
-      //   this.entradas.push(item)
-      // })
+        await characters.map(character => {
+        let item = {}
+        item.id = character.id;
+        item.name = character.name;
+        item.race = character.race;
+        item.gender = character.gender;
+        item.hair = character.hair;
+        item.height = character.height;
+        item.house = character.house;
+        this.characters.push(item)
+      })
       } catch (err) {
         throw new Error(err)
       }
